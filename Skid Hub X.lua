@@ -106,7 +106,7 @@ local function SellInventory()
 	IsSelling = false
 end
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "Home" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "warehouse" }),
     AutoHarvest = Window:AddTab({ Title = "Auto-Harvest", Icon = "leaf" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
@@ -434,6 +434,40 @@ local AutoHarvestToggle = Tabs.AutoHarvest:AddToggle("AutoHarvest", {
     Description = "",
     Default = false
 })
+
+local autoPlantAtPlayerToggle = Tabs.AutoHarvest:AddToggle("AutoPlantAtPlayer", {
+    Title = "Auto Plant at Player Position",
+    Description = "Continuously plants your equipped seed/tool at your current position",
+    Default = false,
+})
+
+task.spawn(function()
+    while true do
+        task.wait(0.1)
+        if autoPlantAtPlayerToggle.Value then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if not character then continue end
+
+            local tool = character:FindFirstChildOfClass("Tool")
+            if not tool then continue end
+
+            local root = character:FindFirstChild("HumanoidRootPart")
+            if not root then continue end
+
+            local baseName = tool:FindFirstChild("Plant_Name") and tool.Plant_Name.Value
+            baseName = baseName or (tool.Name:match("^(.-)%s+[Ss]eed") or tool.Name)
+            baseName = baseName:gsub("%s+$", "")
+
+            local pos = root.Position
+
+            game:GetService("ReplicatedStorage")
+                :WaitForChild("GameEvents")
+                :WaitForChild("Plant_RE")
+                :FireServer(Vector3.new(pos.X, pos.Y, pos.Z), baseName)
+        end
+    end
+end)
 
 -- Functional logic for AutoWalk and AutoHarvest
 local function GetMyFarm()
