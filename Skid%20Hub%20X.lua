@@ -10,6 +10,43 @@ local Leaderstats = LocalPlayer.leaderstats
 local Backpack = LocalPlayer.Backpack
 local PlayerGui = LocalPlayer.PlayerGui
 
+-- FPS Counter Setup
+local fpsGui = Instance.new("ScreenGui")
+fpsGui.Name = "FPSCounter"
+fpsGui.ResetOnSpawn = false
+fpsGui.IgnoreGuiInset = true
+fpsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+fpsGui.Parent = PlayerGui
+
+local fpsLabel = Instance.new("TextLabel")
+fpsLabel.Name = "FPSLabel"
+fpsLabel.Size = UDim2.new(0, 100, 0, 25)
+fpsLabel.Position = UDim2.new(1, -110, 0, 10) -- Top-right corner
+fpsLabel.BackgroundTransparency = 1
+fpsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+fpsLabel.TextStrokeTransparency = 0.5
+fpsLabel.TextXAlignment = Enum.TextXAlignment.Right
+fpsLabel.Font = Enum.Font.SourceSansBold
+fpsLabel.TextSize = 20
+fpsLabel.Text = "FPS: ..."
+fpsLabel.Parent = fpsGui
+
+-- FPS Update Loop
+task.spawn(function()
+	local lastTime = tick()
+	local frames = 0
+	while true do
+		frames += 1
+		local now = tick()
+		if now - lastTime >= 1 then
+			fpsLabel.Text = "FPS: " .. frames
+			frames = 0
+			lastTime = now
+		end
+		task.wait()
+	end
+end)
+
 local ShecklesCount = Leaderstats.Sheckles
 local GameInfo = MarketplaceService:GetProductInfo(game.PlaceId)
 
