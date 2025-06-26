@@ -417,7 +417,7 @@ local AutoBuyPetEggsToggle = Tabs.AutoHarvest:AddToggle("AutoBuyPetEggs", {
 })
 
 task.spawn(function()
-    while task.wait(60) do
+    while task.wait(1) do
         if Options.AutoBuyPetEggs.Value then
             for slot = 1, 3 do
                 pcall(function()
