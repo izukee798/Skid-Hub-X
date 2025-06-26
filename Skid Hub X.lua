@@ -106,7 +106,7 @@ local function SellInventory()
 	IsSelling = false
 end
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "warehouse" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "house" }),
     AutoHarvest = Window:AddTab({ Title = "Auto-Harvest", Icon = "leaf" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
