@@ -431,7 +431,7 @@ end)
 
 local AutoHarvestToggle = Tabs.AutoHarvest:AddToggle("AutoHarvest", {
     Title = "Auto Collect Plants",
-    Description = "",
+    Description = "Do not press if you have a lot of plants it will cause lots of lag",
     Default = false
 })
 
