@@ -281,7 +281,7 @@ end)
                             end
                         end
                     end
-                    task.wait(5)
+                    task.wait(20)
                 end
             end)
         else
@@ -352,7 +352,7 @@ end)
                             end
                         end
                     end
-                    task.wait(5)
+                    task.wait(20)
                 end
             end)
         end
