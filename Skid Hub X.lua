@@ -151,7 +151,7 @@ do
     -- Toggle buttons for UIs
     Tabs.Main:AddButton({
         Title = "Toggle HoneyEventShop_UI",
-        Description = "Show or hide Honey Shop",
+        Description = "Show or hide Honey Shop ( PATCHED ) ",
         Callback = function()
             toggleGui("HoneyEventShop_UI")
         end
@@ -229,18 +229,110 @@ end)
 
     -- Seed list
     local Seeds = {
-        "Cherry Blossom", "Daffodil", "Coconut", "Lumira", "Crocus", "Easter Egg", "Traveler's Fruit", "Apple",
-        "Dandelion", "Cocovine", "Red Lollipop", "Succulent", "Rosy Delight", "Cranberry", "Loquat", "Dragon Pepper",
-        "Moon Blossom", "Pineapple", "Blood Banana", "Crimson Vine", "Pear", "Nectar Thorn", "Bell Pepper", "Pepper",
-        "Cacao", "Lotus", "Lime", "Orange Tulip", "Cursed Fruit", "Carrot", "Mango", "Green Apple", "Elephant Ears",
-        "Lavender", "Hive Fruit", "Parasol Flower", "Moonglow", "Feijoa", "Avocado", "Mint", "Noble Flower",
-        "Tomato", "Ice Cream Bean", "Nightshade", "Lemon", "Sugar Apple", "Wild Carrot", "Bee Balm", "Starfruit",
-        "Bendboo", "Violet Corn", "Passionfruit", "Papaya", "Corn", "Blueberry", "Candy Blossom", "Purple Dahlia",
-        "Nectarine", "Strawberry", "Bamboo", "Sunflower", "Pink Lily", "Banana", "Rose", "Peach", "Lilac", "Foxglove",
-        "Mushroom", "Moon Mango", "Beanstalk", "Cantaloupe", "Candy Sunflower", "Ember Lily", "Suncoil", "Glowshroom",
-        "Venus Fly Trap", "Eggplant", "Durian", "Soul Fruit", "Prickly Pear", "Cauliflower", "Honeysuckle",
-        "Raspberry", "Dragon Fruit", "Moon Melon", "Moonflower", "Chocolate Carrot", "Watermelon", "Celestiberry",
-        "Cactus", "Grape", "Nectarshade", "Pumpkin", "Kiwi", "Manuka Flower"
+    "Cherry Blossom",
+    "Daffodil",
+    "Coconut",
+    "Lumira",
+    "Crocus",
+    "Easter Egg",
+    "Traveler's Fruit",
+    "Apple",
+    "Dandelion",
+    "Cocovine",
+    "Red Lollipop",
+    "Succulent",
+    "Rosy Delight",
+    "Delphinium",
+    "Cranberry",
+    "Loquat",
+    "Dragon Pepper",
+    "Moon Blossom",
+    "Lily of the Valley",
+    "Pineapple",
+    "Blood Banana",
+    "Violet Corn",
+    "Pear",
+    "Nectar Thorn",
+    "Aloe Vera",
+    "Bell Pepper",
+    "Pepper",
+    "Cacao",
+    "Guanabana",
+    "Lotus",
+    "Lime",
+    "Orange Tulip",
+    "Cursed Fruit",
+    "Carrot",
+    "Mango",
+    "Green Apple",
+    "Elephant Ears",
+    "Lavender",
+    "Hive Fruit",
+    "Parasol Flower",
+    "Moonglow",
+    "Feijoa",
+    "White Mulberry",
+    "Avocado",
+    "Mint",
+    "Noble Flower",
+    "Tomato",
+    "Papaya",
+    "Lemon",
+    "Ice Cream Bean",
+    "Bee Balm",
+    "Nightshade",
+    "Cantaloupe",
+    "Cauliflower",
+    "Nectarine",
+    "Wild Carrot",
+    "Pumpkin",
+    "Starfruit",
+    "Sunflower",
+    "Foxglove",
+    "Passionfruit",
+    "Pink Lily",
+    "Lilac",
+    "Blueberry",
+    "Candy Blossom",
+    "Purple Dahlia",
+    "Crimson Vine",
+    "Strawberry",
+    "Moon Mango",
+    "Grape",
+    "Sugar Apple",
+    "Banana",
+    "Rose",
+    "Peach",
+    "Peace Lily",
+    "Candy Sunflower",
+    "Mushroom",
+    "Beanstalk",
+    "Moonflower",
+    "Glowshroom",
+    "Venus Fly Trap",
+    "Pitcher Plant",
+    "Suncoil",
+    "Raspberry",
+    "Soul Fruit",
+    "Eggplant",
+    "Durian",
+    "Ember Lily",
+    "Prickly Pear",
+    "Corn",
+    "Honeysuckle",
+    "Burning Bud",
+    "Dragon Fruit",
+    "Moon Melon",
+    "Bendboo",
+    "Chocolate Carrot",
+    "Watermelon",
+    "Celestiberry",
+    "Cactus",
+    "Bamboo",
+    "Nectarshade",
+    "Kiwi",
+    "Rafflesia",
+    "Manuka Flower"
     }
 
     local selectedSeeds = {}
@@ -567,6 +659,26 @@ task.spawn(function()
 	end
 end)
 
+local Data = {
+    Seeds = require(game:GetService("ReplicatedStorage").Data.SeedData),
+    Eggs = require(game:GetService("ReplicatedStorage").Data.PetEggData),
+    Gears = require(game:GetService("ReplicatedStorage").Data.GearData),
+    Cosmetics = require(game:GetService("ReplicatedStorage").Data.CosmeticItemShopData),
+    Pets = require(game:GetService("ReplicatedStorage").Data.PetRegistry.PetList),
+    Event1 = require(game:GetService("ReplicatedStorage").Data.HoneyEventShopData),
+    Craft = require(game:GetService("ReplicatedStorage").Data.CraftingData.CraftingRecipeRegistry)
+}
+
+local function GetData(name)
+    if not Data[name] then return warn("Not Data Type:", name) end
+    local items = {}
+    for item in pairs(Data[name]) do
+        table.insert(items, '    "'..item..'"')
+    end
+    local text = "local "..name.." = {\n"..table.concat(items, ",\n").."\n}"
+    setclipboard(text)
+end
+GetData("Seeds")
 
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
